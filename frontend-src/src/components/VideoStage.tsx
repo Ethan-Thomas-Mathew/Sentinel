@@ -58,7 +58,16 @@ export function VideoStage({
 
   const toFrame = useCallback((x: number, y: number): [number, number] => {
     const s = frameScale()
-    return [Math.round(x * s), Math.round(y * s)]
+    const img = imgRef.current
+    const fx = Math.round(x * s)
+    const fy = Math.round(y * s)
+    if (!img?.naturalWidth) return [fx, fy]
+    // Clamp to the picture. The canvas can be laid out slightly larger than
+    // the image inside it, and a point outside the frame is nonsense anyway:
+    // nobody is ever detected there, so the zone would silently under-count,
+    // and on the site map it draws outside the scene outline and looks broken.
+    const clamp = (v: number, hi: number) => Math.min(Math.max(v, 0), hi)
+    return [clamp(fx, img.naturalWidth), clamp(fy, img.naturalHeight)]
   }, [frameScale])
 
   const toCanvas = useCallback((x: number, y: number): [number, number] => {

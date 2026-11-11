@@ -6,6 +6,25 @@ An operator console that watches a camera feed, counts how many people are
 inside each configured zone, measures how long they stay, raises an incident
 when a zone is breached, and lets the operator dispatch a response unit to it.
 
+## Demo
+
+![SENTINEL dashboard running](docs/demo.gif)
+
+A real recording of the running application — nothing staged, nothing mocked up.
+In order: the boot sequence, live detection with the density heatmap and movement
+arrows, a zone drawn directly on the video and given a capacity of 2, the zone
+saved and applied without a restart, occupancy passing capacity so the congestion
+banner fires and a Critical incident lands in the queue with its evidence frame,
+and finally the nearest available unit dispatched — Patrol 2, 251 px away.
+
+Higher quality version: [`docs/demo.mp4`](docs/demo.mp4). Stills in [`docs/`](docs/).
+
+Measured during this recording: **13–15 fps at 64–77 ms per frame**, CPU only.
+
+> There is no hosted live demo. The pipeline runs YOLOv8n on the CPU and needs a
+> Python process, so a static host cannot serve it. Clone and run it locally —
+> it is three commands, and the model and demo clip are both in this repository.
+
 ## Why these two tracks merge cleanly
 
 The brief permits combining "related tracks in a single platform". A and B are
