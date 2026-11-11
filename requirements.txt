@@ -1,0 +1,13 @@
+# Python packages this project needs.
+# Install them all with:   pip install -r requirements.txt
+
+ultralytics==8.3.0        # YOLO person detection + ByteTrack tracking   (AGPL-3.0)
+lap==0.5.12               # the matching maths ByteTrack needs           (BSD-2-Clause)
+                          # ^ ultralytics does NOT install this for you. Without it,
+                          #   model.track() fails with "No module named 'lap'".
+opencv-python==4.10.0.84  # reading video, drawing, image maths          (Apache-2.0)
+fastapi==0.115.0          # the web server / API layer                   (MIT)
+uvicorn==0.30.6           # runs the FastAPI server                      (BSD-3-Clause)
+numpy==1.26.4             # array maths (used for the heatmap)           (BSD-3-Clause)
+websockets==12.0          # live event push to the dashboard             (BSD-3-Clause)
+python-multipart==0.0.12  # lets FastAPI accept uploaded video files   (Apache-2.0)

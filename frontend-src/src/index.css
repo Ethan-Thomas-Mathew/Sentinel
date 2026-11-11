@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   SENTINEL theme
+   Tailwind v4 takes its design tokens from CSS, so the palette is declared
+   once here and every component uses it through normal Tailwind classes
+   (bg-panel, text-sig, border-line...). Re-theming the whole dashboard means
+   changing these lines and nothing else.
+   ========================================================================= */
+@theme {
+  --color-ink: #000000;
+  --color-panel: rgba(3, 16, 9, 0.80);
+  --color-panelhi: rgba(6, 28, 15, 0.90);
+  --color-line: #0d3b20;
+  --color-linehot: #1b6b3a;
+  --color-body: #b9ffcf;
+  --color-muted: #4f9168;
+
+  --color-sig: #00ff66;   /* normal readings */
+  --color-warn: #ffd43b;  /* warning */
+  --color-crit: #ff4d4d;  /* critical */
+  --color-info: #3ad6ff;  /* info */
+
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Courier New", monospace;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-body);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* Presentation mode. Screen sharing re-encodes the page at a low bitrate and
+   small type turns to mush at the far end, so every size that has to stay
+   readable goes up. The layout is untouched. */
+body.present { font-size: 15px; }
+body.present .scale-text { font-size: 1.18em; }
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(0, 255, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
+}
+.pulse-ring { animation: pulse-ring 2s infinite; }
+
+@keyframes blink { 50% { opacity: 0; } }
+.caret { animation: blink 1s steps(1) infinite; }
+
+@keyframes land {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: none; }
+}
+.land { animation: land 0.35s ease-out; }
+
+@keyframes nudge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.55); }
+  50%      { box-shadow: 0 0 0 5px rgba(0, 255, 102, 0); }
+}
+.nudge { animation: nudge 1.4s ease-in-out infinite; }
+
+/* Range input styled to the theme without a plugin. */
+input[type="range"] { accent-color: var(--color-sig); height: 4px; cursor: pointer; }
+
+/* Thin scrollbars, so the operator rail does not get a chunky grey bar. */
+* { scrollbar-width: thin; scrollbar-color: var(--color-line) transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 4px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

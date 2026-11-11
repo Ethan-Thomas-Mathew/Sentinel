@@ -1,0 +1,80 @@
+{
+  "_comment": "All the settings you can change without touching the code. Edit the numbers here, save, restart the app.",
+  "source": "data/demo.mp4",
+  "_source_help": "Path to your demo video. Use the number 0 instead (no quotes) to use your webcam.",
+  "loop_video": true,
+  "_loop_video_help": "When the video ends, start it again. Handy during a live demo.",
+  "model_path": "models/yolov8n.pt",
+  "device": "cpu",
+  "_device_help": "Use 'cpu' unless you have an NVIDIA GPU set up, then use 0.",
+  "confidence": 0.35,
+  "_confidence_help": "How sure YOLO must be before it calls something a person. Lower = more detections but more false positives.",
+  "process_width": 720,
+  "_process_width_help": "Frames are shrunk to this width before detection. This mainly sets the size of the picture shown in the dashboard - it is NOT the speed knob, because YOLO resizes to 'imgsz' internally anyway. Lower it to cut bandwidth, not to gain frame rate.",
+  "frame_skip": 0,
+  "_frame_skip_help": "Skip this many frames between detections. Raise to 1 or 2 if your laptop is slow.",
+  "dwell_alert_seconds": 8,
+  "_dwell_alert_help": "Alert when one person stays in a zone longer than this.",
+  "alert_cooldown_seconds": 15,
+  "_alert_cooldown_help": "After an alert fires, wait this long before firing the same one again (stops alert spam).",
+  "heatmap": {
+    "enabled": true,
+    "decay": 0.94,
+    "_decay_help": "How fast old footsteps fade. 0.99 = long trails, 0.90 = only recent movement.",
+    "intensity": 0.35,
+    "_intensity_help": "How strongly the heatmap colours are blended over the video."
+  },
+  "zones": [],
+  "_zones_help": "Draw these on the dashboard with 'Edit zones'. A normal zone alerts when it goes over capacity (Track A). A restricted zone alerts when ANYONE is inside it (Track B intrusion). Every shape is stored the same way: an ordered list of [x, y] points in the frame's own pixel coordinates.",
+  "flow": {
+    "enabled": true,
+    "columns": 12,
+    "rows": 16,
+    "decay": 0.92,
+    "min_speed": 1.2
+  },
+  "_flow_help": "Movement arrows. columns/rows set the grid; decay is how fast old motion fades; min_speed ignores people standing still.",
+  "app_name": "SENTINEL",
+  "_app_name_help": "Shown on the boot screen and in the header.",
+  "units": [
+    {
+      "name": "Patrol 1",
+      "position": [
+        110,
+        1090
+      ],
+      "available": true
+    },
+    {
+      "name": "Patrol 2",
+      "position": [
+        600,
+        700
+      ],
+      "available": true
+    },
+    {
+      "name": "Gate Security",
+      "position": [
+        560,
+        190
+      ],
+      "available": true
+    },
+    {
+      "name": "Medical Response",
+      "position": [
+        200,
+        120
+      ],
+      "available": true
+    }
+  ],
+  "_units_help": "Response units for Track B dispatch. Positions are pixels in the processed frame, the same coordinate space as zone points. You do not need to edit these by hand: press EDIT UNITS on the site map, drag the markers, and press SAVE UNITS.",
+  "imgsz": 512,
+  "_imgsz_help": "THE setting that controls speed. YOLO resizes frames to this before running the network. Measured on the demo clip: 640 -> 15 fps, 512 -> 27 fps (same accuracy), 416 -> 35 fps, 320 -> 53 fps but starts missing people. Lower it if you need speed; re-measure, because the right value depends on how small people are in your frame.",
+  "zones_frame_width": 720,
+  "_zones_frame_width_help": "The frame width the zone points were drawn at. If you change process_width, run.py rescales the zones automatically so they still cover the same part of the scene.",
+  "auto_zone_on_start": false,
+  "_auto_zone_on_start_help": "Off by default. When true, a video that loads with no zones is analysed and a zone is proposed over the busy area. The AUTO button in the zone editor does the same thing on demand, which is usually what you want: you decide what is worth monitoring."
+}

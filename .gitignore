@@ -1,0 +1,24 @@
+# Python virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# The database is generated at runtime, not source code
+events.db
+
+# Node (only needed to REBUILD the front end; frontend/ is committed)
+frontend-src/node_modules/
+frontend-src/tsconfig.tsbuildinfo
+
+# Editor junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# NOTE: models/yolov8n.pt and your demo videos in data/ are deliberately NOT
+# ignored. The brief asks you to submit your demo dataset, and committing the
+# model file means the project runs with no internet connection during the
+# live demo. If a video is over 100 MB, GitHub will reject it — upload it to
+# Drive and put the link in data/README.md instead.
